@@ -1,0 +1,21 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello AccueilController!{% endblock %}
+
+{% block body %}
+<style>
+    body {
+        background-color: #f1f1f1;
+    }
+    .tasks {margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif;}
+    .tasks code { background: #F5F5F5; padding: 2px 6px;}
+<div class="tasks">
+    <h1>Vos tâches</h1>
+    <div class="Grouptask">
+    {% for gtask in gtasks %}
+    </div>
+    <div class="Personaltask">
+    {% for ptask in ptasks %}
+    {% endfor %}
+</div>
+
