@@ -25,7 +25,6 @@ class InscriptionController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            
             $hashedPassword = $passwordHasher->hashPassword(
                 $utilisateur,
                 $utilisateur->getMotDePasse()
@@ -47,7 +46,7 @@ class InscriptionController extends AbstractController
 
             $this->addFlash('success', 'Inscription réussie !');
 
-            return $this->redirectToRoute('app_inscription');
+            return $this->redirectToRoute('app_connexion');
         }
 
         return $this->render('inscription/index.html.twig', [
