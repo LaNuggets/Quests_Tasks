@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\GroupeRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
@@ -25,6 +27,24 @@ class Groupe
 
     #[ORM\Column(length: 255)]
     private ?string $chef = null;
+
+    /**
+     * @var Collection<int, Invitation>
+     */
+    #[ORM\OneToMany(targetEntity: Invitation::class, mappedBy: 'groupe')]
+    private Collection $invitations;
+
+    /**
+     * @var Collection<int, Habitude>
+     */
+    #[ORM\OneToMany(targetEntity: Habitude::class, mappedBy: 'groupe')]
+    private Collection $habitudes;
+
+    public function __construct()
+    {
+        $this->invitations = new ArrayCollection();
+        $this->habitudes = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -75,6 +95,66 @@ class Groupe
     public function setChef(string $chef): static
     {
         $this->chef = $chef;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Invitation>
+     */
+    public function getInvitations(): Collection
+    {
+        return $this->invitations;
+    }
+
+    public function addInvitation(Invitation $invitation): static
+    {
+        if (!$this->invitations->contains($invitation)) {
+            $this->invitations->add($invitation);
+            $invitation->setGroupe($this);
+        }
+
+        return $this;
+    }
+
+    public function removeInvitation(Invitation $invitation): static
+    {
+        if ($this->invitations->removeElement($invitation)) {
+            // set the owning side to null (unless already changed)
+            if ($invitation->getGroupe() === $this) {
+                $invitation->setGroupe(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Habitude>
+     */
+    public function getHabitudes(): Collection
+    {
+        return $this->habitudes;
+    }
+
+    public function addHabitude(Habitude $habitude): static
+    {
+        if (!$this->habitudes->contains($habitude)) {
+            $this->habitudes->add($habitude);
+            $habitude->setGroupe($this);
+        }
+
+        return $this;
+    }
+
+    public function removeHabitude(Habitude $habitude): static
+    {
+        if ($this->habitudes->removeElement($habitude)) {
+            // set the owning side to null (unless already changed)
+            if ($habitude->getGroupe() === $this) {
+                $habitude->setGroupe(null);
+            }
+        }
 
         return $this;
     }
