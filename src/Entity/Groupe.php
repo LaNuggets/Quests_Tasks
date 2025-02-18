@@ -28,6 +28,9 @@ class Groupe
     #[ORM\Column(length: 255)]
     private ?string $chef = null;
 
+    #[ORM\Column(length: 255)]
+    private ?string $membres = null;
+
     /**
      * @var Collection<int, Invitation>
      */
@@ -157,5 +160,13 @@ class Groupe
         }
 
         return $this;
+    }
+
+    public function getMembres(){
+        return $this->membres;
+    }
+
+    public function addMembre(string $membre){
+        array_push($this->membres, $membre);
     }
 }
