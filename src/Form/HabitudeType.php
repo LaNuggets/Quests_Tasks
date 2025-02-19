@@ -38,13 +38,6 @@ class HabitudeType extends AbstractType
                 ],
                 'label' => 'Périodicité',
             ]);
-            // ->add('cible', ChoiceType::class, [
-            //     'choices' => [
-            //         'Individuel' => 'individuel',
-            //         'Groupe' => 'groupe',
-            //     ],
-            //     'label' => 'Cible',
-            // ]);
     }
 
     public function configureOptions(OptionsResolver $resolver): void
