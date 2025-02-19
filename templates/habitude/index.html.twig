@@ -1,0 +1,25 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h1>Mes Habitudes</h1>
+
+    <a href="{{ path('app_habitude_ajouter') }}">Ajouter une habitude</a>
+
+    {% for label, messages in app.flashes %}
+    {% for message in messages %}
+        <div class="alert alert-{{ label }}">
+            {{ message }}
+        </div>
+    {% endfor %}
+{% endfor %}
+
+    <ul>
+        {% for habitude in habitudes %}
+            <li style="color: {{ habitude.couleur }}">
+                {{ habitude.texte }} - {{ habitude.difficulte }} - {{ habitude.periodicite }}
+            </li>
+        {% else %}
+            <p>Aucune habitude enregistrée.</p>
+        {% endfor %}
+    </ul>
+{% endblock %}
