@@ -1,0 +1,13 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Accueil{% endblock %}
+
+{% block body %}
+    <h1>Bienvenue sur l'accueil !</h1>
+
+    <ul>
+        <li><a href="{{ path('app_inscription') }}">Inscription</a></li>
+        <li><a href="{{ path('app_connexion') }}">Connexion</a></li>
+        <li><a href="{{ path('app_profil') }}">Profil</a></li>
+    </ul>
+{% endblock %}
