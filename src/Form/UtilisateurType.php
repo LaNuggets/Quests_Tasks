@@ -24,12 +24,7 @@ class UtilisateurType extends AbstractType
                 'required' => false,
                 'mapped' => false,
             ])
-            ->add('groupe', EntityType::class, [
-                'class' => Groupe::class,
-                'choice_label' => 'nom',
-                'required' => false,
-                'placeholder' => 'Aucun groupe',
-            ])
+            
             ->add('submit', SubmitType::class, [
                 'label' => 'Valider mon inscription'
             ]);
