@@ -19,7 +19,7 @@ class GroupeType extends AbstractType
                 'widget' => 'single_text',
                 'empty_data' => date('d/m/Y'),
             ])
-            ->add('chef')
+            ->add('chef', TextType::class)
             ->add('Valider', SubmitType::class)
         ;
     }
