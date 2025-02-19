@@ -28,8 +28,8 @@ class Groupe
     #[ORM\Column(length: 255)]
     private ?string $chef = null;
 
-    #[ORM\Column(length: 255)]
-    private ?string $membres = null;
+    #[ORM\Column(type: 'array')]
+    private array $membres = [];
 
     /**
      * @var Collection<int, Invitation>
@@ -162,11 +162,11 @@ class Groupe
         return $this;
     }
 
-    public function getMembres(){
-        return $this->membres;
+    public function getMembresId(){
+        return $this->membresId;
     }
 
-    public function addMembre(string $membre){
-        array_push($this->membres, $membre);
+    public function addMembreId(int $membreId){
+        array_push($this->membres, $membreId);
     }
 }

@@ -15,10 +15,10 @@ class GroupeType extends AbstractType
     {
         $builder
             ->add('nom', TextType::class)
-            ->add('dateCreation', null, [
-                'widget' => 'single_text',
-                'empty_data' => date('d/m/Y'),
-            ])
+            // ->add('dateCreation', null, [
+            //     'widget' => 'single_text',
+            //     'empty_data' => date('d/m/Y'),
+            // ])
             ->add('chef', TextType::class)
             ->add('submit', SubmitType::class, [
                 'label' => 'Crée mon Groupe'
