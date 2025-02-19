@@ -133,12 +133,12 @@ class Utilisateur implements UserInterface, PasswordAuthenticatedUserInterface
         return $this;
     }
 
-    public function getGroupe(): ?Groupe
+    public function getGroupeFromUser(): ?Groupe
     {
         return $this->groupe;
     }
 
-    public function setGroupe(?Groupe $groupe): static
+    public function setGroupeFromUser(?Groupe $groupe): static
     {
         $this->groupe = $groupe;
 
