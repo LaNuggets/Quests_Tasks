@@ -20,7 +20,9 @@ class GroupeType extends AbstractType
                 'empty_data' => date('d/m/Y'),
             ])
             ->add('chef', TextType::class)
-            ->add('Valider', SubmitType::class)
+            ->add('submit', SubmitType::class, [
+                'label' => 'Crée mon Groupe'
+            ]);
         ;
     }
 
