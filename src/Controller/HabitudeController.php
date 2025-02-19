@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Habitude;
+use App\Entity\Utilisateur;
 use App\Form\HabitudeType;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -31,6 +32,7 @@ class HabitudeController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $habitude->setCreateur($this->getUser());
+            $habitude->setGroupe($this->getUser()->getGroupeFromUser());
             $habitude->setDateCreation(new \DateTime());
 
             $entityManager->persist($habitude);

@@ -26,7 +26,8 @@ final class CreateGroupeController extends AbstractController
         {
             $groupe->setScore(0);
             $groupe->setDateCreation(new DateTime('now'));
-            $groupe->addMembreId(1);
+            $groupe->addMembreId($this->getUser()->getId());
+            $this->getUser()->setGroupeFromUser($groupe);
             $entityManager->persist($groupe);
             $entityManager->flush();
             //             return $this->redirectToRoute('app_accueil');
