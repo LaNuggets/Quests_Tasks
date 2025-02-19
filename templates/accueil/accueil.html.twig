@@ -3,49 +3,14 @@
 {% block title %}Accueil{% endblock %}
 
 {% block body %}
-    <div class="container mt-4">
-        <h1 class="mb-4">Gestion des habitudes</h1>
+    <div class="container text-center mt-5">
+        <h1>Bienvenue sur notre plateforme !</h1>
+        <p class="lead">Accédez rapidement à la section qui vous intéresse.</p>
 
-        {# Affichage des habitudes existantes #}
-        <h2>Habitudes enregistrées</h2>
-        <div class="card p-3">
-            {% if habitudes is not empty %}
-                <ul class="list-group">
-                    {% for habitude in habitudes %}
-                        <li class="list-group-item">
-                            <strong>{{ habitude.texte }}</strong> 
-                            - {{ habitude.difficulte }} 
-                            - {{ habitude.periodicite }} 
-                            <span class="text-muted"> (Ajouté le {{ habitude.dateCreation|date('d/m/Y') }})</span>
-                        </li>
-                    {% endfor %}
-                </ul>
-            {% else %}
-                <p class="text-muted">Aucune habitude enregistrée.</p>
-            {% endif %}
-        </div>
-
-        {# Formulaire d'ajout d'une nouvelle habitude #}
-        <h2 class="mt-4">Ajouter une nouvelle habitude</h2>
-        <div class="card p-3">
-            {% if form is defined %}
-                {{ form_start(form) }}
-                    <div class="mb-3">
-                        {{ form_row(form.texte) }}
-                    </div>
-                    <div class="mb-3">
-                        {{ form_row(form.difficulte) }}
-                    </div>
-                    <div class="mb-3">
-                        {{ form_row(form.periodicite) }}
-                    </div>
-                    <div class="text-end">
-                        {{ form_row(form.save) }}
-                    </div>
-                {{ form_end(form) }}
-            {% else %}
-                <p class="text-danger">Erreur : Formulaire non défini ❌</p>
-            {% endif %}
+        <div class="mt-4">
+            <a href="{{ path('app_groupe') }}" class="btn btn-primary mx-2">Groupes</a>
+            <a href="{{ path('app_habitude') }}" class="btn btn-success mx-2">Habitudes</a>
+            <a href="{{ path('app_connexion') }}" class="btn btn-warning mx-2">Connexion</a>
         </div>
     </div>
 {% endblock %}
