@@ -44,10 +44,6 @@ class HabitudeType extends AbstractType
                     'Groupe' => 'groupe',
                 ],
                 'label' => 'Cible',
-            ])
-            ->add('dateCreation', DateTimeType::class, [
-                'widget' => 'single_text',
-                'label' => 'Date de création',
             ]);
     }
 
