@@ -6,7 +6,13 @@
     <h1>Connexion</h1>
 
     {% if error %}
-        <div style="color: red;">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
+        <div style="color: red;">
+            Identifiants incorrects. Veuillez réessayer.
+        </div>
+    {% else %}
+        <div style="color: green;">
+            Aucun problème, tout est bon.
+        </div>
     {% endif %}
 
     <form method="post">

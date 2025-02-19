@@ -53,8 +53,10 @@ class LoginFormAuthenticator extends AbstractLoginFormAuthenticator
 
     public function onAuthenticationFailure(Request $request, AuthenticationException $exception): Response
     {
+        $request->getSession()->getFlashBag()->add('error', 'Identifiants incorrects.');
+    
         return new RedirectResponse($this->router->generate(self::LOGIN_ROUTE));
-    }
+    }    
 
     protected function getLoginUrl(Request $request): string
     {

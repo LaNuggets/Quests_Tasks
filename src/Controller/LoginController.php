@@ -9,15 +9,14 @@ use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 
 class LoginController extends AbstractController
 {
-    #[Route(path: '/connexion', name: 'app_connexion')]
+    #[Route('/connexion', name: 'app_connexion')]
     public function login(AuthenticationUtils $authenticationUtils): Response
     {
-        if ($this->getUser()) {
-            return $this->redirectToRoute('app_profil');
-        }
-
         $error = $authenticationUtils->getLastAuthenticationError();
+
         $lastUsername = $authenticationUtils->getLastUsername();
+
+        dump($error);
 
         return $this->render('security/login.html.twig', [
             'last_username' => $lastUsername,
@@ -25,9 +24,9 @@ class LoginController extends AbstractController
         ]);
     }
 
-    #[Route(path: '/logout', name: 'app_logout')]
+    #[Route('/logout', name: 'app_logout')]
     public function logout(): void
     {
-        throw new \LogicException('Cette méthode peut être vide - elle est interceptée par le système de sécurité.');
+        throw new \LogicException('La déconnexion est gérée par le système de sécurité.');
     }
 }
