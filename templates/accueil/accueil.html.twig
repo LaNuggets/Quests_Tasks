@@ -1,21 +1,51 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello AccueilController!{% endblock %}
+{% block title %}Accueil{% endblock %}
 
 {% block body %}
-<style>
-    body {
-        background-color: #f1f1f1;
-    }
-    .tasks {margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif;}
-    .tasks code { background: #F5F5F5; padding: 2px 6px;}
-<div class="tasks">
-    <h1>Vos tâches</h1>
-    <div class="Grouptask">
-    {% for gtask in gtasks %}
-    </div>
-    <div class="Personaltask">
-    {% for ptask in ptasks %}
-    {% endfor %}
-</div>
+    <div class="container mt-4">
+        <h1 class="mb-4">Gestion des habitudes</h1>
 
+        {# Affichage des habitudes existantes #}
+        <h2>Habitudes enregistrées</h2>
+        <div class="card p-3">
+            {% if habitudes is not empty %}
+                <ul class="list-group">
+                    {% for habitude in habitudes %}
+                        <li class="list-group-item">
+                            <strong>{{ habitude.texte }}</strong> 
+                            - {{ habitude.difficulte }} 
+                            - {{ habitude.periodicite }} 
+                            <span class="text-muted"> (Ajouté le {{ habitude.dateCreation|date('d/m/Y') }})</span>
+                        </li>
+                    {% endfor %}
+                </ul>
+            {% else %}
+                <p class="text-muted">Aucune habitude enregistrée.</p>
+            {% endif %}
+        </div>
+
+        {# Formulaire d'ajout d'une nouvelle habitude #}
+        <h2 class="mt-4">Ajouter une nouvelle habitude</h2>
+        <div class="card p-3">
+            {% if form is defined %}
+                {{ form_start(form) }}
+                    <div class="mb-3">
+                        {{ form_row(form.texte) }}
+                    </div>
+                    <div class="mb-3">
+                        {{ form_row(form.difficulte) }}
+                    </div>
+                    <div class="mb-3">
+                        {{ form_row(form.periodicite) }}
+                    </div>
+                    <div class="text-end">
+                        {{ form_row(form.save) }}
+                    </div>
+                {{ form_end(form) }}
+            {% else %}
+                <p class="text-danger">Erreur : Formulaire non défini ❌</p>
+            {% endif %}
+        </div>
+    </div>
+{% endblock %}
