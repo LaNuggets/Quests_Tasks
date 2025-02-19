@@ -30,7 +30,7 @@ class HabitudeController extends AbstractController
         $form = $this->createForm(HabitudeType::class, $habitude);
         $form->handleRequest($request);
 
-        if ($form->isSubmitted() && $form->isValid()) {
+        if ($form->isSubmitted()) {
             $habitude->setCreateur($this->getUser());
             $habitude->setGroupe($this->getUser()->getGroupeFromUser());
             $habitude->setDateCreation(new \DateTime());
