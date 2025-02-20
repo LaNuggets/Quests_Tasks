@@ -133,12 +133,12 @@ class Utilisateur implements UserInterface, PasswordAuthenticatedUserInterface
         return $this;
     }
 
-    public function getGroupeFromUser(): ?Groupe
+    public function getGroupe(): ?Groupe
     {
         return $this->groupe;
     }
 
-    public function setGroupeFromUser(?Groupe $groupe): static
+    public function setGroupe(?Groupe $groupe): static
     {
         $this->groupe = $groupe;
 
@@ -165,37 +165,27 @@ class Utilisateur implements UserInterface, PasswordAuthenticatedUserInterface
         return $this->habitudes;
     }
 
-    // ------------------- PARTIE SÉCURITÉ -------------------
-
-    /**
-     * Cette méthode est utilisée par Symfony pour identifier l'utilisateur
-     */
+    
     public function getUserIdentifier(): string
     {
         return $this->email;
     }
 
-    /**
-     * Cette méthode est utilisée par Symfony pour obtenir le mot de passe
-     */
+    
     public function getPassword(): ?string
     {
         return $this->motDePasse;
     }
 
-    /**
-     * Cette méthode est utilisée par Symfony pour récupérer les rôles de l'utilisateur
-     */
+    
     public function getRoles(): array
     {
         return ['ROLE_USER'];
     }
 
-    /**
-     * Cette méthode est utilisée par Symfony pour effacer les données sensibles (si nécessaire)
-     */
+
     public function eraseCredentials(): void
     {
-        // Par exemple, effacer le plainPassword si tu en utilises un temporaire
+        
     }
 }

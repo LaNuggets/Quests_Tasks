@@ -17,7 +17,7 @@ class ProfilController extends AbstractController
     {
         /** @var Utilisateur $utilisateur */
         $utilisateur = $this->getUser();
-        $groupe = $utilisateur->getGroupeFromUser();
+        $groupe = $utilisateur->getGroupe();
         $habitudes = $utilisateur->getHabitudes();
 
 

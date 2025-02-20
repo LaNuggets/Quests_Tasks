@@ -24,6 +24,7 @@ class UtilisateurType extends AbstractType
                 'required' => false,
                 'mapped' => false,
             ])
+            
             ->add('submit', SubmitType::class, [
                 'label' => 'Valider mon inscription'
             ]);
