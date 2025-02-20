@@ -1,0 +1,42 @@
+{% extends "base.html.twig" %}
+
+{% block title %}Welcome to Quests tasks{% endblock %}
+
+{% block stylesheets %}
+    <link rel="stylesheet" href="{{ asset('connexion.css') }}">
+{% endblock %}
+
+{% block body %}
+    <header>
+        <h1>Bienvenue sur Quests tasks</h1>
+    </header>
+    
+    <div class="wrapper">
+        <div class="card-switch">
+            <label class="switch">
+               <input type="checkbox" class="toggle">
+               <span class="slider"></span>
+               <span class="card-side"></span>
+               <div class="flip-card__inner">
+                  <div class="flip-card__front">
+                     <div class="title">Connexion</div>
+                     <form class="flip-card__form" action="{{ path('login') }}" method="post">
+                        <input class="flip-card__input" name="email" placeholder="Email" type="email">
+                        <input class="flip-card__input" name="password" placeholder="Mot de passe" type="password">
+                        <button class="flip-card__btn" type="submit"> C'est parti !</button>
+                     </form>
+                  </div>
+                  <div class="flip-card__back">
+                     <div class="title">Création d'un compte</div>
+                     <form class="flip-card__form" action="{{ path('register') }}" method="post">
+                        <input class="flip-card__input" name="username" placeholder="Pseudo" type="text">
+                        <input class="flip-card__input" name="email" placeholder="Email" type="email">
+                        <input class="flip-card__input" name="password" placeholder="Mot de passe" type="password">
+                        <button class="flip-card__btn" type="submit">Débutons !</button>
+                     </form>
+                  </div>
+               </div>
+            </label>
+        </div>   
+   </div>
+{% endblock %}
