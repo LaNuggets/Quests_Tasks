@@ -3,7 +3,7 @@
 {% block title %}Home Page{% endblock %}
 
 {% block stylesheets %}
-    <link rel="stylesheet" href="{{ asset('styles.css') }}">
+    <link rel="stylesheet" href="{{ asset('styles/styles.css') }}">
 {% endblock %}
 
 {% block body %}
@@ -11,7 +11,7 @@
     <h1>Tableau de bord</h1>
     <nav>
         <ul>
-            <li><a href="{{ path('group') }}">Groupes</a></li>
+            <li><a href="{{ path('app_create_groupe') }}">Groupes</a></li>
         </ul>
     </nav>
 </header>
@@ -19,18 +19,18 @@
 <section class="main-container">
     <div class="account-section">
         <div class="profile-container">
-            <a href="{{ path('profile') }}">
+            <a href="{{ path('app_profil') }}">
                 <img src="{{ asset('profile.jpg') }}" alt="Photo de profil" class="profile-pic">
             </a>
             <div class="profile-info">
-                <h2 class="username">{{ user.username }}</h2>
-                <p class="score">Score personnel : {{ user.score }}</p>
+                <h2 class="username">{{ user.pseudo }}</h2>
+                <p class="score">Score personnel : à ajouter user score</p>
             </div>
         </div>
         <div class="group-info">
-            <h2 class="group-name">{{ group.name }}</h2>
-            <p class="group-score">Score du Groupe : {{ group.score }}</p>
-            <p class="group-member">Nombre de membres dans le groupe : {{ group.memberCount }}</p>
+            <h2 class="group-name">{{ groupe.nom }}</h2>
+            <p class="group-score">Score du Groupe : {{ groupe.score }}</p>
+            <p class="group-member">Nombre de membres dans le groupe : à rajouter</p>
         </div>
     </div>
 </section>
@@ -49,16 +49,16 @@
             </tr>
         </thead>
         <tbody>
-            {% for task in tasks %}
+            {% for task in habitudes %}
                 <tr>
                     <td>
                         <input class="checkbox" id="checkbox_{{ loop.index }}" type="checkbox" />
                         <label for="checkbox_{{ loop.index }}"></label>
                     </td>
-                    <td>{{ task.name }}</td>
-                    <td>{{ task.difficulty }}</td>
-                    <td>{{ task.remainingTime }}</td>
-                    <td>{{ task.creator }}</td>
+                    <td>{{ task.texte }}</td>
+                    <td>{{ task.difficulte }}</td>
+                    <td>{{ task.periodicite}}</td>
+                    <td>{{ task.createur.pseudo }}</td>
                     <td>
                         <button class="deleteButton" onclick="deleteTask({{ task.id }})">
                             <span class="tooltip">Delete</span>

@@ -13,14 +13,23 @@ use Symfony\Component\Routing\Attribute\Route;
 
 class HabitudeController extends AbstractController
 {
-    #[Route('/habitudes', name: 'app_habitudes')]
+    #[Route('/tableau_de_bord', name: 'app_habitudes')]
     public function index(): Response
     {
-        $habitudes = $this->getUser()->getHabitudes();
+        $user = $this->getUser();
 
-        return $this->render('habitude/index.html.twig', [
-            'habitudes' => $habitudes,
-        ]);
+        if($user == null){
+            return $this->redirectToRoute('app_connexion');
+        }else{
+            $groupe = $user->getGroupeFromUser();
+            $habitudes = $user->getHabitudes();
+
+            return $this->render('twig/index.html.twig', [
+                'habitudes' => $habitudes,
+                'user' => $user,
+                'groupe' => $groupe,
+            ]);
+        }
     }
 
     #[Route('/habitude/ajouter', name: 'app_habitude_ajouter')]

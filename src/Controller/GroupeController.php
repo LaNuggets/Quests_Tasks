@@ -11,16 +11,11 @@ use Request;
 
 class GroupeController extends AbstractController {
     
-    #[Route('/groupe/{id}', name:'groupe spécifique')]
-    public function getGroupData(EntityManagerInterface $entityManager, int $id){
-        $groupe = $entityManager->getRepository(Groupe::class)->find($id);
-        
-        if (!$groupe) {
-            throw $this->createNotFoundException(
-                'No group found for id '.$id
-            );
-        }
-
-        return $this->render('groupe.html.twig', ['NomGroupe' => $groupe->getNom()]);
+    #[Route('/groupe', name:'app_groupe_connexion')]
+    public function getGroupData(EntityManagerInterface $entityManager){
+        $user = $this->getUser();
+        //        $groupeInvitation = $user.getInvitation();
+        //        $groupe = $entityManager->getRepository(Groupe::class)->find($id);
+        return $this->render('twig/groupconnexion.html.twig', []);
     }
 }

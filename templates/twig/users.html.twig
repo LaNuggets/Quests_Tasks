@@ -2,13 +2,17 @@
 
 {% block title %}Profil Utilisateur{% endblock %}
 
+{% block stylesheets %}
+    <link rel="stylesheet" href="{{ asset('styles/styles.css') }}">
+{% endblock %}
+
 {% block body %}
 <header>
     <h1>Profil Utilisateur</h1>
     <nav>
         <ul>
-            <li><a href="{{ path('home') }}">Accueil</a></li>
-            <li><a href="{{ path('group') }}">Groupes</a></li>
+            <li><a href="{{ path('app_accueil') }}">Accueil</a></li>
+            <li><a href="{{ path('app_create_groupe') }}">Groupes</a></li>
         </ul>
     </nav>
 </header>
@@ -44,12 +48,12 @@
                         </tr>
                     </thead>
                     <tbody>
-                        {% for task in user.tasks %}
+                        {% for task in user.habitudes %}
                             <tr>
-                                <td>{{ task.name }}</td>
-                                <td>{{ task.difficulty }}</td>
-                                <td>{{ task.time_remaining }}</td>
-                                <td>{{ task.creator }}</td>
+                                <td>{{ task.texte }}</td>
+                                <td>{{ task.difficulte }}</td>
+                                <td>{{ task.periodicite }}</td>
+                                <td>{{ task.createur.pseudo }}</td>
                             </tr>
                         {% else %}
                             <tr>

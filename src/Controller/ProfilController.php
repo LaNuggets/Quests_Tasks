@@ -48,8 +48,8 @@ class ProfilController extends AbstractController
             return $this->redirectToRoute('app_profil');
         }
 
-        return $this->render('profil/index.html.twig', [
-            'utilisateur' => $utilisateur,
+        return $this->render('twig/users.html.twig', [
+            'user' => $utilisateur,
             'form' => $form->createView(),
             'groupe' => $groupe,
             'habitudes' => $habitudes,
