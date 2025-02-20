@@ -4,6 +4,8 @@ namespace App\Controller;
 
 use App\Entity\Groupe;
 use App\Entity\Utilisateur;
+use App\Entity\Invitation;
+use App\Form\InvitationType;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
@@ -13,15 +15,31 @@ use Symfony\Component\Routing\Attribute\Route;
 class GroupeController extends AbstractController {
     
     #[Route('/groupe/{id}', name:'app_groupe')]
-    public function getGroupData(EntityManagerInterface $entityManager, int $id){
+    public function getGroupData(Request $request, EntityManagerInterface $entityManager, int $id){
+        $invit = new Invitation();
+        $invitForm = $this->createForm(InvitationType::class, $invit);
+        $invitForm->handleRequest($request);
+        
         $user = $this->getUser();
 
-        if($user->getGroupeFromUser() == null){
-            return $this->redirectToRoute('app_create_groupe');
-        }
-        //        $groupeInvitation = $user.getInvitation();
         $groupe = $entityManager->getRepository(Groupe::class)->find($id);
-        return $this->render('twig/group.html.twig', ['groupe' => $groupe]);
+        $membres = $groupe->getMembresId();
+        // $membresNames = [];
+        // for($i=0;$i<=$membres;$i++){
+        //     array_push($membresNames, $groupe->getMembresId()[$i]);
+        // }
+        
+        if($invitForm->isSubmitted()){
+            $invit->setStatut('à faire');
+            $invit->setDateEnvoi(new DateTime('now'));
+            $invit->setEmetteur($user->getId());
+            $invit->setGroupe($user->getGroupFromUser());
+
+            $entityManager->persist($invit);
+            $entityManager->flush();
+        }
+        
+        return $this->render('twig/group.html.twig', ['invitForm' => $invitForm->createView(), 'groupe' => $groupe, 'membres' => $membres]);
     }
 
     #[Route('/groupe/{groupeId}/ajouter-utilisateur', name: 'app_groupe_ajouter_utilisateur', methods: ['POST'])]
