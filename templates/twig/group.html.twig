@@ -2,12 +2,16 @@
 
 {% block title %}Groups{% endblock %}
 
+{% block stylesheets %}
+    <link rel="stylesheet" href="{{ asset('styles/styles.css') }}">
+{% endblock %}
+
 {% block body %}
   <header>
     <h1>Groupe</h1>
     <nav>
       <ul>
-        <li><a href="{{ path('homepage') }}">Accueil</a></li>
+        <li><a href="{{ path('app_accueil') }}">Accueil</a></li>
       </ul>
     </nav>
   </header>
@@ -31,11 +35,11 @@
         </tr>
       </thead>
       <tbody>
-        {% for group in groups %}
+        {% for group in groupe %}
         <tr>
-          <td>{{ group.name }}</td>
+          <td>{{ group.nom }}</td>
           <td>{{ group.members }}</td>
-          <td>{{ group.leader }}</td>
+          <td>{{ group.chef }}</td>
         </tr>
         {% endfor %}
       </tbody>
@@ -53,10 +57,10 @@
         </tr>
       </thead>
       <tbody>
-        {% for request in requests %}
+        {% for group in groupe %}
         <tr>
-          <td>{{ request.group_name }}</td>
-          <td>{{ request.members }}</td>
+          <td>{{ group.nom }}</td>
+          <td>{{ group.members }}</td>
           <td>
             <button class="deleteButton">
               <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 50 59" class="bin">
