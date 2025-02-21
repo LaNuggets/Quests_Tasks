@@ -10,8 +10,13 @@
     <h1>Bienvenue sur l'accueil !</h1>
 
     <ul>
-        <li><a href="{{ path('app_inscription') }}">Inscription</a></li>
-        <li><a href="{{ path('app_connexion') }}">Connexion</a></li>
-        <li><a href="{{ path('app_profil') }}">Profil</a></li>
+      {% if user %}
+      <li><a href="{{ path('app_logout') }}">Déconnexion</a></li>
+      <li><a href="{{ path('app_habitudes') }}">Tableau de bord</a></li>
+      {% else %}
+      <li><a href="{{ path('app_inscription') }}">Inscription</a></li>
+      <li><a href="{{ path('app_connexion') }}">Connexion</a></li>
+      {% endif %}
+      <li><a href="{{ path('app_profil') }}">Profil</a></li>
     </ul>
 {% endblock %}

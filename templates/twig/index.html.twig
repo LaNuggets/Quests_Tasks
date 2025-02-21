@@ -11,7 +11,8 @@
     <h1>Tableau de bord</h1>
     <nav>
         <ul>
-            <li><a href="{{ path('app_groupe',  {'id': groupe.id}) }}">Groupes</a></li>
+          <li><a href="{{ path('app_groupe',  {'id': groupe.id}) }}">Groupes</a></li>
+	  <li><a href="{{ path('app_profil') }}">Profil</a></li>
         </ul>
     </nav>
 </header>
@@ -24,13 +25,13 @@
             </a>
             <div class="profile-info">
                 <h2 class="username">{{ user.pseudo }}</h2>
-                <p class="score">Score personnel : à ajouter user score</p>
+                <!-- <p class="score">Score personnel : à ajouter user score</p> -->
             </div>
         </div>
         <div class="group-info">
             <h2 class="group-name">{{ groupe.nom }}</h2>
             <p class="group-score">Score du Groupe : {{ groupe.score }}</p>
-            <p class="group-member">Nombre de membres dans le groupe : à rajouter</p>
+            <!-- <p class="group-member">Nombre de membres dans le groupe : à rajouter</p> -->
         </div>
     </div>
 </section>
@@ -44,7 +45,7 @@
                 <th>Taches</th>
                 <th>Difficultés</th>
                 <th>Temps restant</th>
-                <th>Créateur</th>
+                <th>Cible</th>
                 <th>Supprimer</th>
             </tr>
         </thead>
@@ -52,15 +53,20 @@
             {% for task in habitudes %}
                 <tr>
                     <td>
-                        <input class="checkbox" id="checkbox_{{ loop.index }}" type="checkbox" />
-                        <label for="checkbox_{{ loop.index }}"></label>
+                        <!-- <input class="checkbox" id="checkbox_{{ loop.index }}" type="checkbox" /> -->
+                        <!-- <label for="checkbox_{{ loop.index }}"></label> -->
+			<form action="{{ path('app_valid_task', { 'id': task.id }) }}" method="post">
+                        <button class="delete" type="submit">
+		      </form>
                     </td>
                     <td>{{ task.texte }}</td>
                     <td>{{ task.difficulte }}</td>
                     <td>{{ task.periodicite}}</td>
                     <td>{{ task.createur.pseudo }}</td>
                     <td>
-                        <button class="deleteButton" onclick="deleteTask({{ task.id }})">
+		      <form action="{{ path('app_delete_task', { 'id': task.id }) }}" method="post">
+                        <button class="deleteButton" type="submit">
+		      </form>
                             <span class="tooltip">Delete</span>
                         </button>
                     </td>

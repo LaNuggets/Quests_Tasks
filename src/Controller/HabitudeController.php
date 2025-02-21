@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\Habitude;
 use App\Entity\Utilisateur;
 use App\Form\HabitudeType;
+use App\Entity\Invitation;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -22,7 +23,7 @@ class HabitudeController extends AbstractController
             return $this->redirectToRoute('app_connexion');
         }else{
             $groupe = $user->getGroupe();
-            $habitudes = $user->getHabitudes();
+            $habitudes = $groupe->getHabitudes();
 
             return $this->render('twig/index.html.twig', [
                 'habitudes' => $habitudes,
@@ -56,4 +57,51 @@ class HabitudeController extends AbstractController
             'form' => $form->createView(),
         ]);
     }
+
+    #[Route('/delete_task/{id}', name: 'app_delete_task', methods: ['POST'])]
+    public function delete_task(int $id, EntityManagerInterface $entityManager): Response
+    {
+        $user = $this->getUser();
+        $habitude = $entityManager->getRepository(Habitude::class)->find($id);
+
+        $entityManager->remove($habitude);
+        $entityManager->flush();
+
+        return $this->redirectToRoute('app_habitudes');
+        }
+
+        #[Route('/valid_task/{id}', name: 'app_valid_task', methods: ['POST'])]
+    public function valid_task(int $id, EntityManagerInterface $entityManager): Response
+    {
+        $user = $this->getUser();
+        $habitude = $entityManager->getRepository(Habitude::class)->find($id);
+
+        $groupe = $habitude->getGroupe();
+
+        $habitudeDif = $habitude->getDifficulte();
+
+        $point = 0;
+        switch($habitudeDif){
+        case 'très facile':
+            $point = 1;
+            break;
+        case 'facile':
+            $point = 2;
+            break;
+        case 'moyen':
+            $point = 5;
+            break;
+        case 'difficile':
+            $point = 10;
+            break;
+        }
+        
+        $groupe->setScore($groupe->getScore() + $point);
+
+        $entityManager->persist($habitude);
+        $entityManager->persist($groupe);
+        $entityManager->flush();
+
+        return $this->redirectToRoute('app_habitudes');
+        }
 }

@@ -15,7 +15,6 @@ class GroupeType extends AbstractType
     {
         $builder
             ->add('nom', TextType::class)
-            ->add('chef', TextType::class)
             ->add('submit', SubmitType::class, [
                 'label' => 'Crée mon Groupe'
             ]);

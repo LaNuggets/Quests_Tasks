@@ -17,19 +17,21 @@ final class CreateGroupeController extends AbstractController
     #[Route('/create/groupe', name: 'app_create_groupe')]
     public function index(Request $request, EntityManagerInterface $entityManager,): Response
     {
+        $user = $this->getUser();
         $groupe = new Groupe();
         $groupeForm = $this->createForm(GroupeType::class, $groupe);
         $groupeForm->handleRequest($request);
         
         if($groupeForm->isSubmitted() && $groupeForm->isValid())
         {
+            $groupe->setChef($user->getPseudo());
             $groupe->setScore(0);
             $groupe->setDateCreation(new DateTime('now'));
             $groupe->addMembreId($this->getUser()->getId());
             $this->getUser()->setGroupe($groupe);
             $entityManager->persist($groupe);
             $entityManager->flush();
-            //             return $this->redirectToRoute('app_accueil');
+            return $this->redirectToRoute('app_habitudes');
         }
         
         return $this->render('create_groupe/index.html.twig', [

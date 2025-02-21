@@ -11,7 +11,8 @@
     <h1>Groupe</h1>
     <nav>
       <ul>
-        <li><a href="{{ path('app_habitudes') }}">Accueil</a></li>
+        <li><a href="{{ path('app_accueil') }}">Accueil</a></li>
+	<li><a href="{{ path('app_create_groupe') }}">Crée un Groupe</a></li>
       </ul>
     </nav>
   </header>
@@ -42,12 +43,15 @@
         </tr>
       </thead>
       <tbody>
-        {% for group in groupe %}
-        <tr>
+	{% for invitation in invitations %}
+	{% set group = invitation.groupe %} 
+	<tr>
           <td>{{ group.nom }}</td>
           <td>{{ group.chef }}</td>
           <td>{{ group.score }}</td>
-          <th><button class="deleteButton">
+          <td>
+            <form action="{{ path('app_delete_invit', { 'id': invitation.id }) }}" method="post">
+                <button class="deleteButton">
             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 50 59" class="bin">
               <path fill="#B5BAC1" d="M0 7.5C0 5.01472 2.01472 3 4.5 3H45.5C47.9853 3 50 5.01472 50 7.5V7.5C50 8.32843 49.3284 9 48.5 9H1.5C0.671571 9 0 8.32843 0 7.5V7.5Z"></path>
               <path fill="#B5BAC1" d="M17 3C17 1.34315 18.3431 0 20 0H29.3125C30.9694 0 32.3125 1.34315 32.3125 3V3H17V3Z"></path>
@@ -55,12 +59,17 @@
               <path fill="#B5BAC1" d="M2 13H48L47.6742 21.28H2.32031L2 13Z"></path>
             </svg>
             <span class="tooltip">Delete</span>
-          </button></th>
-          <th>
-            <div class="checkbox-wrapper-19">
-              <input id="cbtest-{{ loop.index }}" type="checkbox">
-              <label class="check-box" for="cbtest-{{ loop.index }}"></label>
-            </div>
+            </button>
+	    </form>
+	  </th>
+<th>
+  <form action="{{ path('app_accept_invit', { 'id': invitation.id }) }}" method="post">
+    <button class="deleteButton"></button>
+            <!-- <div class="checkbox-wrapper-19"> -->
+            <!--   <input id="cbtest-{{ loop.index }}" type="checkbox"> -->
+            <!--   <label class="check-box" for="cbtest-{{ loop.index }}"></label> -->
+            <!-- </div> -->
+  </form>
           </th>
         </tr>
         {% endfor %}

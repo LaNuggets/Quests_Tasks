@@ -12,10 +12,11 @@
     <nav>
         <ul>
           <li><a href="{{ path('app_accueil') }}">Accueil</a></li>
-    {% if user.groupe %}
+	  {% if user.groupe %}
+	  	  <li><a href="{{ path('app_habitudes') }}">Tableau de bord</a></li>
           <li><a href="{{ path('app_groupe', {'id': groupe.id}) }}">Groupes</a></li>
 	  {% else %}
-          <li><a href="{{ path('app_create_groupe')}}">Groupes</a></li>
+          <li><a href="{{ path('app_groupe_connexion')}}">Groupes</a></li>
 	  {% endif %}
         </ul>
     </nav>
