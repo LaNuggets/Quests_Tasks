@@ -29,7 +29,11 @@
             <img src="{{ user.profile_picture|default('profile.jpg') }}" alt="Photo de profil" class="profile-pic" id="profilePic">
         </label>
         <input type="file" id="profile_picture" accept="image/*" style="display: none">
-        <button class="btn">Modifier</button>
+	<div class="debugButton">
+			<form action="{{ path('app_profil_update') }}">	
+			  <button class="btn">Modifier</button>
+			</form>
+	</div>
 
         <div class="profile-info">
             <label for="pseudo">Pseudo :</label>
