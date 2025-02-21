@@ -57,7 +57,7 @@ src/
 [WAMP](https://www.wampserver.com/)
 [MAMP](https://www.mamp.info/en/windows/)
 - Avant de Lancer le projet il faut bien s'assurer d'avoir toute les dépendances, pour ce faire aller à la racine du projet et faite la commande :
-```composer install```
+``` composer install ```
 - Penser à exécuter les migrations après chaque modification de l'entité :
   ```bash
   php bin/console make:migration
