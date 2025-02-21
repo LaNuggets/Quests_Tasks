@@ -52,6 +52,12 @@ src/
 │   └── HabitudeType.php
 ```
 ## Conseils Pratiques
+- Pour pouvoir faire fonctionner le projet il vous faudra un environnement de développement PHP complet. Installer au choix l'un des trois.
+[XAMPP](https://www.apachefriends.org/download.html)
+[WAMP](https://www.wampserver.com/)
+[MAMP](https://www.mamp.info/en/windows/)
+- Avant de Lancer le projet il faut bien s'assurer d'avoir toute les dépendances, pour ce faire aller à la racine du projet et faite la commande :
+```composer install```
 - Penser à exécuter les migrations après chaque modification de l'entité :
   ```bash
   php bin/console make:migration
