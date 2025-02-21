@@ -7,6 +7,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use App\Entity\Utilisateur;
 
 #[ORM\Entity(repositoryClass: GroupeRepository::class)]
 class Groupe
@@ -123,7 +124,6 @@ class Groupe
     public function removeInvitation(Invitation $invitation): static
     {
         if ($this->invitations->removeElement($invitation)) {
-            // set the owning side to null (unless already changed)
             if ($invitation->getGroupe() === $this) {
                 $invitation->setGroupe(null);
             }
@@ -153,7 +153,6 @@ class Groupe
     public function removeHabitude(Habitude $habitude): static
     {
         if ($this->habitudes->removeElement($habitude)) {
-            // set the owning side to null (unless already changed)
             if ($habitude->getGroupe() === $this) {
                 $habitude->setGroupe(null);
             }
@@ -163,7 +162,7 @@ class Groupe
     }
 
     public function getMembresId(){
-        return $this->membresId;
+        return $this->membres;
     }
 
     public function addMembreId(int $membreId){

@@ -37,13 +37,6 @@ class HabitudeType extends AbstractType
                     'Hebdomadaire' => 'hebdomadaire',
                 ],
                 'label' => 'Périodicité',
-            ])
-            ->add('cible', ChoiceType::class, [
-                'choices' => [
-                    'Individuel' => 'individuel',
-                    'Groupe' => 'groupe',
-                ],
-                'label' => 'Cible',
             ]);
     }
 

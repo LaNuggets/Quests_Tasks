@@ -4,29 +4,42 @@ namespace App\Controller;
 
 use App\Entity\Groupe;
 use App\Entity\Utilisateur;
+use App\Entity\Invitation;
+use App\Form\InvitationType;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Attribute\Route;
 
-class GroupeController extends AbstractController
-{
-    #[Route('/groupe/{id}', name: 'app_groupe_afficher')]
-    public function afficherGroupe(int $id, EntityManagerInterface $entityManager): Response
-    {
+class GroupeController extends AbstractController {
+    
+    #[Route('/groupe/{id}', name:'app_groupe')]
+    public function getGroupData(Request $request, EntityManagerInterface $entityManager, int $id){
+        $invit = new Invitation();
+        $invitForm = $this->createForm(InvitationType::class, $invit);
+        $invitForm->handleRequest($request);
+        
+        $user = $this->getUser();
+
         $groupe = $entityManager->getRepository(Groupe::class)->find($id);
+        $membres = $groupe->getMembresId();
+        // $membresNames = [];
+        // for($i=0;$i<=$membres;$i++){
+        //     array_push($membresNames, $groupe->getMembresId()[$i]);
+        // }
+        
+        if($invitForm->isSubmitted()){
+            $invit->setStatut('à faire');
+            $invit->setDateEnvoi(new DateTime('now'));
+            $invit->setEmetteur($user->getId());
+            $invit->setGroupe($user->getGroupFromUser());
 
-        if (!$groupe) {
-            throw $this->createNotFoundException('Aucun groupe trouvé pour l\'ID ' . $id);
+            $entityManager->persist($invit);
+            $entityManager->flush();
         }
-
-        $membres = $groupe->getUtilisateurs();
-
-        return $this->render('groupe/index.html.twig', [
-            'groupe' => $groupe,
-            'membres' => $membres,
-        ]);
+        
+        return $this->render('twig/group.html.twig', ['invitForm' => $invitForm->createView(), 'groupe' => $groupe, 'membres' => $membres]);
     }
 
     #[Route('/groupe/{groupeId}/ajouter-utilisateur', name: 'app_groupe_ajouter_utilisateur', methods: ['POST'])]

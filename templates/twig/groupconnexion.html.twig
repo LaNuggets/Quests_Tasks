@@ -1,0 +1,70 @@
+{% extends "base.html.twig" %}
+
+{% block title %}Groups{% endblock %}
+
+{% block stylesheets %}
+  <link rel="stylesheet" href="{{ asset('styles/styles.css') }}">
+{% endblock %}
+
+{% block body %}
+  <header>
+    <h1>Groupe</h1>
+    <nav>
+      <ul>
+        <li><a href="{{ path('app_habitudes') }}">Accueil</a></li>
+      </ul>
+    </nav>
+  </header>
+  
+  <section>
+    <h2>A la recherche d'un groupe ?</h2>
+    <div class="group">
+        <svg viewBox="0 0 24 24" aria-hidden="true" class="search-icon">
+          <g>
+            <path d="M21.53 20.47l-3.66-3.66C19.195 15.24 20 13.214 20 11c0-4.97-4.03-9-9-9s-9 4.03-9 9 4.03 9 9 9c2.215 0 4.24-.804 5.808-2.13l3.66 3.66c.147.146.34.22.53.22s.385-.073.53-.22c.295-.293.295-.767.002-1.06zM3.5 11c0-4.135 3.365-7.5 7.5-7.5s7.5 3.365 7.5 7.5-3.365 7.5-7.5 7.5-7.5-3.365-7.5-7.5z"></path>
+          </g>
+        </svg>
+      
+        <input id="query" class="input" type="search" placeholder="Recherche..." name="searchbar" />
+      </div>
+  </section>
+  
+  <section>
+    <h2>Demande</h2>
+    <table>
+      <thead>
+        <tr>
+          <th>Nom du groupe</th>
+          <th>Propriétaire du groupe</th>
+          <th>Nombre de membre</th>
+          <th>Refuser</th>
+          <th>Ajouter</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for group in groupe %}
+        <tr>
+          <td>{{ group.nom }}</td>
+          <td>{{ group.chef }}</td>
+          <td>{{ group.members }}</td>
+          <th><button class="deleteButton">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 50 59" class="bin">
+              <path fill="#B5BAC1" d="M0 7.5C0 5.01472 2.01472 3 4.5 3H45.5C47.9853 3 50 5.01472 50 7.5V7.5C50 8.32843 49.3284 9 48.5 9H1.5C0.671571 9 0 8.32843 0 7.5V7.5Z"></path>
+              <path fill="#B5BAC1" d="M17 3C17 1.34315 18.3431 0 20 0H29.3125C30.9694 0 32.3125 1.34315 32.3125 3V3H17V3Z"></path>
+              <path fill="#B5BAC1" d="M2.18565 18.0974C2.08466 15.821 3.903 13.9202 6.18172 13.9202H43.8189C46.0976 13.9202 47.916 15.821 47.815 18.0975L46.1699 55.1775C46.0751 57.3155 44.314 59.0002 42.1739 59.0002H7.8268C5.68661 59.0002 3.92559 57.3155 3.83073 55.1775L2.18565 18.0974ZM18.0003 49.5402C16.6196 49.5402 15.5003 48.4209 15.5003 47.0402V24.9602C15.5003 23.5795 16.6196 22.4602 18.0003 22.4602C19.381 22.4602 20.5003 23.5795 20.5003 24.9602V47.0402C20.5003 48.4209 19.381 49.5402 18.0003 49.5402ZM29.5003 47.0402C29.5003 48.4209 30.6196 49.5402 32.0003 49.5402C33.381 49.5402 34.5003 48.4209 34.5003 47.0402V24.9602C34.5003 23.5795 33.381 22.4602 32.0003 22.4602C30.6196 22.4602 29.5003 23.5795 29.5003 24.9602V47.0402Z" clip-rule="evenodd" fill-rule="evenodd"></path>
+              <path fill="#B5BAC1" d="M2 13H48L47.6742 21.28H2.32031L2 13Z"></path>
+            </svg>
+            <span class="tooltip">Delete</span>
+          </button></th>
+          <th>
+            <div class="checkbox-wrapper-19">
+              <input id="cbtest-{{ loop.index }}" type="checkbox">
+              <label class="check-box" for="cbtest-{{ loop.index }}"></label>
+            </div>
+          </th>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </section>
+{% endblock %}

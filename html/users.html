@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Profil Utilisateur</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header>
+        <h1>Profil Utilisateur</h1>
+        <nav>
+            <ul>
+                <li><a href="home.html">Accueil</a></li>
+                <li><a href="group.html">Groupes</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <section class="account-section">
+        <div class="profile-container">
+            <!-- Photo de profil cliquable -->
+            <label for="profile_picture">
+                <img src="profile.jpg" alt="Photo de profil" class="profile-pic" id="profilePic">
+            </label>
+            <input type="file" id="profile_picture" accept="image/*" style="display: none">
+            <button class="btn">Modifier</button>
+
+            <div class="profile-info">
+                <label for="pseudo">Pseudo :</label>
+                <input type="text" id="pseudo" value="PseudoUtilisateur">
+
+                <label for="email">Email :</label>
+                <input type="email" id="email" value="user@example.com">
+                
+                <label for="email">Mot de passe :</label>
+                <input type="text" id="password" value="Mots de passe">
+
+                <section>
+                    <h2>Taches</h2>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Taches</th>
+                                <th>Difficultés</th>
+                                <th>Temps restant</th>
+                                <th>Créateur</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <!-- Dynamically populated with habit data -->
+                            <tr>
+                                <td>Walk 30 minutes</td>
+                                <td>Easy</td>
+                                <td>21h30</td>
+                                <td>John Doe</td>
+                            </tr>
+                            <tr>
+                                <td>Read 10 pages</td>
+                                <td>Easy</td>
+                                <td>10min</td>
+                                <td>Jane Smith</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </section>
+                <p><strong>Dernière connexion :</strong> <span id="lastLogin">2025-02-18 14:32</span></p>
+            </div>
+        </div>
+
+        <button class="btn"> Enregistrer</button>
+        
+    </section>
+
+    <script src="script.js"></script>
+</body>
+</html>

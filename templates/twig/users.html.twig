@@ -1,0 +1,88 @@
+{% extends "base.html.twig" %}
+
+{% block title %}Profil Utilisateur{% endblock %}
+
+{% block stylesheets %}
+    <link rel="stylesheet" href="{{ asset('styles/styles.css') }}">
+{% endblock %}
+
+{% block body %}
+<header>
+    <h1>Profil Utilisateur</h1>
+    <nav>
+        <ul>
+          <li><a href="{{ path('app_accueil') }}">Accueil</a></li>
+    {% if user.groupe %}
+          <li><a href="{{ path('app_groupe', {'id': groupe.id}) }}">Groupes</a></li>
+	  {% else %}
+          <li><a href="{{ path('app_create_groupe')}}">Groupes</a></li>
+	  {% endif %}
+        </ul>
+    </nav>
+</header>
+
+<section class="account-section">
+    <div class="profile-container">
+        <!-- Photo de profil cliquable -->
+        <label for="profile_picture">
+            <img src="{{ user.profile_picture|default('profile.jpg') }}" alt="Photo de profil" class="profile-pic" id="profilePic">
+        </label>
+        <input type="file" id="profile_picture" accept="image/*" style="display: none">
+        <button class="btn">Modifier</button>
+
+        <div class="profile-info">
+            <label for="pseudo">Pseudo :</label>
+            <input type="text" id="pseudo" value="{{ user.pseudo }}">
+
+            <label for="email">Email :</label>
+            <input type="email" id="email" value="{{ user.email }}">
+            
+            <label for="password">Mot de passe :</label>
+            <input type="text" id="password" value="{{ user.password }}">
+
+            <section>
+                <h2>Tâches</h2>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Tâches</th>
+                            <th>Difficultés</th>
+                            <th>Temps restant</th>
+                            <th>Créateur</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for task in user.habitudes %}
+                            <tr>
+                                <td>{{ task.texte }}</td>
+                                <td>{{ task.difficulte }}</td>
+                                <td>{{ task.periodicite }}</td>
+                                <td>{{ task.createur.pseudo }}</td>
+                            </tr>
+                        {% else %}
+                            <tr>
+                                <td colspan="4">Aucune tâche disponible</td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </section>
+            <p><strong>Dernière connexion :</strong> <span id="lastLogin">{{ user.last_login|default('Non disponible') }}</span></p>
+        </div>
+    </div>
+
+    <button class="btn"> Enregistrer</button>
+</section>
+
+    {% if user.groupe %}
+    <h3>Ajouter un utilisateur au groupe {{ user.groupe.nom }}</h3>
+<form method="get" action="{{ path('app_groupe_ajouter_utilisateur', { groupeId: user.groupe.id }) }}">
+    <label for="pseudo">Pseudo de l'utilisateur :</label>
+    <input type="text" name="pseudo" id="pseudo" required>
+    <button type="submit">Ajouter</button>
+</form>
+{% else %}
+    <p>L'utilisateur n'appartient à aucun groupe.</p>
+{% endif %}
+<script src="{{ asset('script.js') }}"></script>
+{% endblock %}
