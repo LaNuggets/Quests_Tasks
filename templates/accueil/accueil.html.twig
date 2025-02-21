@@ -4,13 +4,39 @@
 
 {% block body %}
     <div class="container text-center mt-5">
-        <h1>Bienvenue sur notre plateforme !</h1>
-        <p class="lead">Accédez rapidement à la section qui vous intéresse.</p>
+        <div class="jumbotron bg-light p-5 rounded shadow-sm">
+            <h1 class="display-4">Bienvenue sur notre plateforme !</h1>
+            <p class="lead text-muted">Accédez rapidement à la section qui vous intéresse et simplifiez votre organisation.</p>
+        </div>
 
-        <div class="mt-4">
-            <a href="{{ path('app_groupe') }}" class="btn btn-primary mx-2">Groupes</a>
-            <a href="{{ path('app_habitude') }}" class="btn btn-success mx-2">Habitudes</a>
-            <a href="{{ path('app_connexion') }}" class="btn btn-warning mx-2">Connexion</a>
+        <div class="row mt-5">
+            <div class="col-md-4">
+                <div class="card border-0 shadow-sm">
+                    <div class="card-body text-center">
+                        <h5 class="card-title">Groupes</h5>
+                        <p class="card-text">Gérez et rejoignez des groupes pour collaborer efficacement.</p>
+                        <a href="{{ path('app_groupe') }}" class="btn btn-primary">Accéder</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card border-0 shadow-sm">
+                    <div class="card-body text-center">
+                        <h5 class="card-title">Habitudes</h5>
+                        <p class="card-text">Suivez vos habitudes et atteignez vos objectifs quotidiens.</p>
+                        <a href="{{ path('app_habitude') }}" class="btn btn-success">Découvrir</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card border-0 shadow-sm">
+                    <div class="card-body text-center">
+                        <h5 class="card-title">Connexion</h5>
+                        <p class="card-text">Connectez-vous pour accéder à toutes les fonctionnalités.</p>
+                        <a href="{{ path('app_connexion') }}" class="btn btn-warning">Se connecter</a>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 {% endblock %}

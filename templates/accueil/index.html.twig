@@ -3,11 +3,17 @@
 {% block title %}Accueil{% endblock %}
 
 {% block body %}
-    <h1>Bienvenue sur l'accueil !</h1>
+    <div class="titreaccueil">
+        <h1>Bienvenue sur l'accueil !</h1>
+    </div>
+    <p>Bienvenue sur l'application de suivi des habitudes et de celles de vos groupes.</p>
+    <br>
 
     <ul>
         <li><a href="{{ path('app_inscription') }}">Inscription</a></li>
+        <br>
         <li><a href="{{ path('app_connexion') }}">Connexion</a></li>
+        <br>
         <li><a href="{{ path('app_profil') }}">Profil</a></li>
     </ul>
 {% endblock %}

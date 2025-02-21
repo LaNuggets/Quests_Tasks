@@ -163,7 +163,7 @@ class Groupe
     }
 
     public function getMembresId(){
-        return $this->membresId;
+        return $this->membres;
     }
 
     public function addMembreId(int $membreId){
