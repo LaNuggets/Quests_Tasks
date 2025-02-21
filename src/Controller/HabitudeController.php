@@ -23,7 +23,9 @@ class HabitudeController extends AbstractController
             return $this->redirectToRoute('app_connexion');
         }else{
             $groupe = $user->getGroupe();
+
             $habitudes = $groupe->getHabitudes();
+
 
             return $this->render('twig/index.html.twig', [
                 'habitudes' => $habitudes,
