@@ -5,7 +5,8 @@ namespace App\Form;
 use App\Entity\Habitude;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
-use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use Symfony\Component\Form\Extension\Core\Type\ColorType;
+use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -16,30 +17,33 @@ class HabitudeType extends AbstractType
     {
         $builder
             ->add('texte', TextType::class, [
-                'label' => 'Texte de l\'habitude',
-                'attr' => ['class' => 'form-control']
+                'label' => 'Description de l\'habitude',
             ])
             ->add('difficulte', ChoiceType::class, [
-                'label' => 'Difficulté',
                 'choices' => [
-                    'Facile' => 'Facile',
-                    'Moyenne' => 'Moyenne',
-                    'Difficile' => 'Difficile'
+                    'Très Facile (1 point)' => 'très facile',
+                    'Facile (2 points)' => 'facile',
+                    'Moyen (5 points)' => 'moyen',
+                    'Difficile (10 points)' => 'difficile',
                 ],
-                'attr' => ['class' => 'form-control']
+                'label' => 'Difficulté',
+            ])
+            ->add('couleur', ColorType::class, [
+                'label' => 'Couleur',
             ])
             ->add('periodicite', ChoiceType::class, [
-                'label' => 'Périodicité',
                 'choices' => [
-                    'Quotidienne' => 'Quotidienne',
-                    'Hebdomadaire' => 'Hebdomadaire',
-                    'Mensuelle' => 'Mensuelle'
+                    'Quotidienne' => 'quotidienne',
+                    'Hebdomadaire' => 'hebdomadaire',
                 ],
-                'attr' => ['class' => 'form-control']
+                'label' => 'Périodicité',
             ])
-            ->add('save', SubmitType::class, [
-                'label' => 'Ajouter Habitude',
-                'attr' => ['class' => 'btn btn-primary mt-3']
+            ->add('cible', ChoiceType::class, [
+                'choices' => [
+                    'Individuel' => 'individuel',
+                    'Groupe' => 'groupe',
+                ],
+                'label' => 'Cible',
             ]);
     }
 

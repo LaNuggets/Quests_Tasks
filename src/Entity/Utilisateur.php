@@ -7,32 +7,34 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
+use Symfony\Component\Security\Core\User\UserInterface;
 
 #[ORM\Entity(repositoryClass: UtilisateurRepository::class)]
-class Utilisateur
+class Utilisateur implements UserInterface, PasswordAuthenticatedUserInterface
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\Column(length: 50)]
+    #[ORM\Column(length: 50, unique: true)]
     private ?string $pseudo = null;
 
-    #[ORM\Column(length: 255)]
+    #[ORM\Column(length: 255, unique: true)]
     private ?string $email = null;
 
     #[ORM\Column(length: 255)]
-    private ?string $motdepase = null;
+    private ?string $motDePasse = null;
 
     #[ORM\Column(length: 255, nullable: true)]
-    private ?string $string = null;
+    private ?string $profilePicture = null;
 
-    #[ORM\Column(type: Types::DATETIME_MUTABLE)]
+    #[ORM\Column(type: Types::DATETIME_MUTABLE, nullable: true)]
     private ?\DateTimeInterface $lastLogin = null;
 
-    #[ORM\Column(length: 255)]
-    private ?string $groupe = null;
+    #[ORM\ManyToOne(targetEntity: Groupe::class, inversedBy: 'utilisateurs')]
+    private ?Groupe $groupe = null;
 
     /**
      * @var Collection<int, HistoriqueScore>
@@ -95,26 +97,26 @@ class Utilisateur
         return $this;
     }
 
-    public function getMotdepase(): ?string
+    public function getMotDePasse(): ?string
     {
-        return $this->motdepase;
+        return $this->motDePasse;
     }
 
-    public function setMotdepase(string $motdepase): static
+    public function setMotDePasse(string $motDePasse): static
     {
-        $this->motdepase = $motdepase;
+        $this->motDePasse = $motDePasse;
 
         return $this;
     }
 
-    public function getString(): ?string
+    public function getProfilePicture(): ?string
     {
-        return $this->string;
+        return $this->profilePicture;
     }
 
-    public function setString(?string $string): static
+    public function setProfilePicture(?string $profilePicture): static
     {
-        $this->string = $string;
+        $this->profilePicture = $profilePicture;
 
         return $this;
     }
@@ -124,142 +126,66 @@ class Utilisateur
         return $this->lastLogin;
     }
 
-    public function setLastLogin(\DateTimeInterface $lastLogin): static
+    public function setLastLogin(?\DateTimeInterface $lastLogin): static
     {
         $this->lastLogin = $lastLogin;
 
         return $this;
     }
 
-    public function getGroupe(): ?string
+    public function getGroupe(): ?Groupe
     {
         return $this->groupe;
     }
 
-    public function setGroupe(string $groupe): static
+    public function setGroupe(?Groupe $groupe): static
     {
         $this->groupe = $groupe;
 
         return $this;
     }
 
-    /**
-     * @return Collection<int, HistoriqueScore>
-     */
     public function getHistoriqueScores(): Collection
     {
         return $this->historiqueScores;
     }
 
-    public function addHistoriqueScore(HistoriqueScore $historiqueScore): static
-    {
-        if (!$this->historiqueScores->contains($historiqueScore)) {
-            $this->historiqueScores->add($historiqueScore);
-            $historiqueScore->setUtilisateur($this);
-        }
-
-        return $this;
-    }
-
-    public function removeHistoriqueScore(HistoriqueScore $historiqueScore): static
-    {
-        if ($this->historiqueScores->removeElement($historiqueScore)) {
-            // set the owning side to null (unless already changed)
-            if ($historiqueScore->getUtilisateur() === $this) {
-                $historiqueScore->setUtilisateur(null);
-            }
-        }
-
-        return $this;
-    }
-
-    /**
-     * @return Collection<int, Invitation>
-     */
     public function getInvitations(): Collection
     {
         return $this->invitations;
     }
 
-    public function addInvitation(Invitation $invitation): static
-    {
-        if (!$this->invitations->contains($invitation)) {
-            $this->invitations->add($invitation);
-            $invitation->setEmetteur($this);
-        }
-
-        return $this;
-    }
-
-    public function removeInvitation(Invitation $invitation): static
-    {
-        if ($this->invitations->removeElement($invitation)) {
-            // set the owning side to null (unless already changed)
-            if ($invitation->getEmetteur() === $this) {
-                $invitation->setEmetteur(null);
-            }
-        }
-
-        return $this;
-    }
-
-    /**
-     * @return Collection<int, Notification>
-     */
     public function getNotifications(): Collection
     {
         return $this->notifications;
     }
 
-    public function addNotification(Notification $notification): static
-    {
-        if (!$this->notifications->contains($notification)) {
-            $this->notifications->add($notification);
-            $notification->setUtilisateur($this);
-        }
-
-        return $this;
-    }
-
-    public function removeNotification(Notification $notification): static
-    {
-        if ($this->notifications->removeElement($notification)) {
-            // set the owning side to null (unless already changed)
-            if ($notification->getUtilisateur() === $this) {
-                $notification->setUtilisateur(null);
-            }
-        }
-
-        return $this;
-    }
-
-    /**
-     * @return Collection<int, Habitude>
-     */
     public function getHabitudes(): Collection
     {
         return $this->habitudes;
     }
 
-    public function addHabitude(Habitude $habitude): static
+    
+    public function getUserIdentifier(): string
     {
-        if (!$this->habitudes->contains($habitude)) {
-            $this->habitudes->add($habitude);
-            $habitude->setCreateur($this);
-        }
-
-        return $this;
+        return $this->email;
     }
 
-    public function removeHabitude(Habitude $habitude): static
+    
+    public function getPassword(): ?string
     {
-        if ($this->habitudes->removeElement($habitude)) {
-            // set the owning side to null (unless already changed)
-            if ($habitude->getCreateur() === $this) {
-                $habitude->setCreateur(null);
-            }
-        }
+        return $this->motDePasse;
+    }
 
-        return $this;
+    
+    public function getRoles(): array
+    {
+        return ['ROLE_USER'];
+    }
+
+
+    public function eraseCredentials(): void
+    {
+        
     }
 }
