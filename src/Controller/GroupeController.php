@@ -2,6 +2,8 @@
 
 namespace App\Controller;
 
+
+use DateTime;
 use App\Entity\Groupe;
 use App\Entity\Utilisateur;
 use App\Entity\Invitation;
@@ -15,7 +17,7 @@ use Symfony\Component\Routing\Attribute\Route;
 class GroupeController extends AbstractController {
     
     #[Route('/groupe/{id}', name:'app_groupe')]
-    public function getGroupData(Request $request, EntityManagerInterface $entityManager, int $id){
+    public function Groupe(Request $request, EntityManagerInterface $entityManager, int $id){
         $invit = new Invitation();
         $invitForm = $this->createForm(InvitationType::class, $invit);
         $invitForm->handleRequest($request);
@@ -24,22 +26,28 @@ class GroupeController extends AbstractController {
 
         $groupe = $entityManager->getRepository(Groupe::class)->find($id);
         $membres = $groupe->getMembresId();
-        // $membresNames = [];
-        // for($i=0;$i<=$membres;$i++){
-        //     array_push($membresNames, $groupe->getMembresId()[$i]);
-        // }
+        $membresStat = [];
+
+        $userRepository = $entityManager->getRepository(Utilisateur::class);
+
+        foreach ($membres as $membreId) {
+            $membre = $userRepository->find($membreId);
+            if ($membre) {
+                $membresStat[] = $membre;
+            }
+        }
         
         if($invitForm->isSubmitted()){
-            $invit->setStatut('à faire');
+            $invit->setStatut('En Attente');
             $invit->setDateEnvoi(new DateTime('now'));
-            $invit->setEmetteur($user->getId());
-            $invit->setGroupe($user->getGroupFromUser());
+            $invit->setEmetteur($user);
+            $invit->setGroupe($user->getGroupe());
 
             $entityManager->persist($invit);
             $entityManager->flush();
         }
         
-        return $this->render('twig/group.html.twig', ['invitForm' => $invitForm->createView(), 'groupe' => $groupe, 'membres' => $membres]);
+        return $this->render('twig/group.html.twig', ['invitForm' => $invitForm->createView(), 'groupe' => $groupe, 'membres' => $membresStat]);
     }
 
     #[Route('/groupe/{groupeId}/ajouter-utilisateur', name: 'app_groupe_ajouter_utilisateur', methods: ['POST'])]
@@ -76,5 +84,27 @@ class GroupeController extends AbstractController {
         $this->addFlash('success', "L'utilisateur $pseudo a été ajouté au groupe avec succès.");
 
         return $this->redirectToRoute('app_groupe_afficher', ['id' => $groupeId]);
+    }
+
+    #[Route('/groupe_connexion/', name:'app_groupe_connexion')]
+     public function findGroup(Request $request, EntityManagerInterface $entityManager)
+    {
+        $user = $this->getUser();
+        
+        $invitations = $entityManager->getRepository(Invitation::class)->findBy([
+            'recepetur' => $user
+        ]);
+
+        $Tgroup = [];
+
+    foreach ($invitations as $invitation) {
+        $groupe = $invitation->getGroupe();
+        
+        if ($groupe && !in_array($groupe, $Tgroup, true)) {
+            $Tgroup[] = $groupe;
+        }
+    }
+
+        return $this->render('twig/groupconnexion.html.twig', ['invitations' =>$invitations, 'groupe' => $Tgroup]);
     }
 }

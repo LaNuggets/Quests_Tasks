@@ -21,7 +21,7 @@ class HabitudeController extends AbstractController
         if($user == null){
             return $this->redirectToRoute('app_connexion');
         }else{
-            $groupe = $user->getGroupeFromUser();
+            $groupe = $user->getGroupe();
             $habitudes = $user->getHabitudes();
 
             return $this->render('twig/index.html.twig', [
@@ -41,7 +41,7 @@ class HabitudeController extends AbstractController
 
         if ($form->isSubmitted()) {
             $habitude->setCreateur($this->getUser());
-            $habitude->setGroupe($this->getUser()->getGroupeFromUser());
+            $habitude->setGroupe($this->getUser()->getGroupe());
             $habitude->setDateCreation(new \DateTime());
 
             $entityManager->persist($habitude);

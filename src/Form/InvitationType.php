@@ -9,6 +9,7 @@ use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 
 class InvitationType extends AbstractType
 {
@@ -16,8 +17,12 @@ class InvitationType extends AbstractType
     {
         $builder
             ->add('recepetur', EntityType::class, [
+                'label' => 'Rechercher un utilisateur à ajouter',
                 'class' => Utilisateur::class,
-                'choice_label' => 'id',
+                'choice_label' => 'pseudo',
+            ])
+            ->add('submit', SubmitType::class, [
+                'label' => 'Envoyer'
             ])
         ;
     }

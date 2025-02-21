@@ -16,6 +16,15 @@ class InvitationRepository extends ServiceEntityRepository
         parent::__construct($registry, Invitation::class);
     }
 
+        public function findInvitationByUser(Utilisateur $user)
+    {
+        return $this->createQueryBuilder('i')
+            ->where('i.recepetur = :user')
+            ->setParameter('user', $user)
+            ->getQuery()
+            ->getResult();
+    }
+
     //    /**
     //     * @return Invitation[] Returns an array of Invitation objects
     //     */
